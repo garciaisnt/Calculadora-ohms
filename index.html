@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea Electronica - Calculadora</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+    
+    
+
+    <div id="app" class="container jumbotron" >
+
+        <h1>Calculadora Resistores</h1>
+        <hr>
+        <h2>Colores a número</h2> 
+
+        <label for="Bandas">Bandas: </label>
+        <select v-model.number="Bandas" :name="Bandas" :id="Bandas" @change="cambioNumBanda()">
+            <option disabled>Selecione número de bandas</option>
+            <option :value="3">3</option>
+            <option :value="4">4</option>
+            <option :value="5">5</option>
+        </select>       
+
+        <div v-for="i in nBandasCargar" >
+            <label :for="'Color'+i">Color #{{i}}</label>
+            <select :name="'Color'+i" @change="cambioValor()" v-model="Colors[i-1]">
+                <option selected=true disabled>Seleccione un color</option>       
+                <option value="0">0.Negro</option>
+                <option value="1">1.Cafe</option>
+                <option value="2">2.Rojo</option>
+                <option value="3">3.Naranja</option>
+                <option value="4">4.Amarrillo</option>
+                <option value="5">5.Verde</option>
+                <option value="6">6.Azul</option>
+                <option value="7">7.Violeta</option>
+                <option value="8">8.Gris</option>
+                <option value="9">9.Blanco</option>
+            </select>
+        </div>
+        
+        <div v-show="Bandas >= 4">
+            <label :for="tolerancia">Color #{{nBandasCargar+1}} (Tolerancia): </label>
+            <select v-model.number="tolerancia" @change="cambioValor()">        
+                <option value="1">0.Cafe</option>
+                <option value="2">1.Rojo</option>
+                <option value="0.5">2.Verde</option>
+                <option value="0.25">3.Azul</option>
+                <option value="0.10">4.Violeta</option>
+                <option value="0.05">5.Gris</option>
+                <option value="5">6.Oro</option>
+                <option value="10">7.Plata</option>                
+            </select>
+        </div>
+        
+
+        <h3>Resultado: {{ nResistencia }}</h3>
+
+        <hr>
+        <hr>
+        <h2>Número a colores</h2>
+        <label for="txtNumero">Escriba el número: </label>
+        <input name="txtNumero" type="number" v-model="txtNumero" placeholder="Ej: 10000" min="0">
+        <select v-model.number="tipoNotacion">        
+            <option value="0">Ω</option>
+            <option value="1">KΩ</option>
+            <option value="2">MΩ</option>
+            <option value="3">GΩ</option>                           
+        </select>
+        <select v-model="toleranciaNumero"> 
+            <option value="0" selected disabled>Tolerancia</option>      
+            <option value="Cafe">±1%</option>
+            <option value="Rojo">±2%</option>
+            <option value="Verde">±0.5%</option>
+            <option value="Azul">±0.25%</option>
+            <option value="Violeta">±0.10%</option>
+            <option value="Gris">±0.05%</option>
+            <option value="Oro">±5%</option>
+            <option value="Plata">±10%</option>                
+        </select>
+        <button class="btn btn-primary" v-on:click="calColNumero()">Calcular</button>
+
+        <h4>Respuesta: {{respuestaNum}}</h4>
+        <h4>Tolerancia color: {{toleranciaNumero}}</h4>
+        
+
+
+    </div>
+
+    
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
